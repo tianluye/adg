@@ -15,13 +15,13 @@ import java.util.jar.JarFile;
 public class ServletContainerTools {
 
     /**
-     * 从包下的 META-INF/service里读取配置文件，得到 ServletContainerInitializer实现类
+     * 从包下的 META-INF/services里读取配置文件，得到 ServletContainerInitializer实现类
      *
      * @return
      */
     public static Set<Class<?>> loadServletContainerInitializerImplClasses() {
         Set<Class<?>> classSet = new HashSet<Class<?>>();
-        String fileName = "META-INF/service/" + ServletContainerInitializer.class.getName();
+        String fileName = "META-INF/services/" + ServletContainerInitializer.class.getName();
         try {
 
             InputStream inputStream = ServletContainerTools.class.getClassLoader().getResourceAsStream(fileName);
