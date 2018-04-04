@@ -3,8 +3,7 @@ package com.adg.spring.servlet.initializer;
 import com.adg.spring.servlet.context.ServletContext;
 
 import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author tian.lue
@@ -13,7 +12,7 @@ public class StartSpringContainer {
 
     private static final String PACKAGE_PATH = "com.adg.spring";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // 启动 Spring容器，首先去加载包下的 META-INF/service下的文件
         Set<Class<?>> classSet = ServletContainerTools.loadServletContainerInitializerImplClasses();
 
@@ -47,7 +46,7 @@ public class StartSpringContainer {
                 Set<Class<?>> implClassSet = ServletContainerTools.getChildOrImplClass(initClass, classes);
                 implClassSets.addAll(implClassSet);
             }
-            // TODO： implClassSets进行排序
+            // 反射执行配置文件里实现类的 onStartup方法
             try {
                 Method method = implClass.getMethod("onStartup", Set.class, ServletContext.class);
                 method.invoke(implClass.newInstance(), implClassSets, servletContext);
